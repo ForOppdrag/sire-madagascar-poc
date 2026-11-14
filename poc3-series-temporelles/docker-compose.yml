@@ -22,7 +22,7 @@ services:
         condition: service_healthy
 
   database:
-    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.4}
+    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.7}
     environment:
       POSTGRES_DB: sensorthings
       POSTGRES_USER: ${ST_DB_USER:-sensorthings}
