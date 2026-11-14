@@ -12,7 +12,7 @@ name: sire-poc1
 
 services:
   postgis:
-    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.4}
+    image: ${POSTGIS_IMAGE:-postgis/postgis:18-3.7}
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-sire}
       POSTGRES_USER: ${POSTGRES_USER:-sire}
