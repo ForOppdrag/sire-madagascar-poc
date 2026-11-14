@@ -70,7 +70,7 @@ services:
     depends_on: [geoserver, catalogue, producteur]
 
   gdal:
-    image: ${GDAL_IMAGE:-ghcr.io/osgeo/gdal:ubuntu-small-3.9.2}
+    image: ${GDAL_IMAGE:-ghcr.io/osgeo/gdal:ubuntu-small-3.13.3}
     profiles: ["outils"]
     volumes:
       - ./data:/data
