@@ -1,13 +1,25 @@
 # Surveillance de la chaîne d'approvisionnement logicielle
-# (OWASP Top 10:2025 — A03 Software Supply Chain Failures)
+# (OWASP Top 10:2025 — A03 Software Supply Chain Failures).
+# Une demande groupée par écosystème et par semaine ; les montées de version
+# majeures des images (GeoServer, PostGIS…) sont exclues : elles demandent une
+# vérification manuelle de compatibilité.
 version: 2
 updates:
   - package-ecosystem: pip
     directories: ["/poc1-interoperabilite", "/poc2-diagnostic", "/poc3-series-temporelles"]
     schedule: { interval: weekly }
+    groups:
+      python: { patterns: ["*"] }
   - package-ecosystem: docker-compose
     directories: ["/poc1-interoperabilite", "/poc3-series-temporelles"]
     schedule: { interval: weekly }
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      images: { patterns: ["*"] }
   - package-ecosystem: github-actions
     directory: "/"
     schedule: { interval: weekly }
+    groups:
+      actions: { patterns: ["*"] }
