@@ -31,6 +31,8 @@ jobs:
           python -m pytest -q tests
           python -m sire_diag.cli profiler exemples/donnees/* -o /tmp/rapports
           python -m sire_diag.cli matrice exemples/donnees/* -o /tmp/rapports
+          python -m sire_diag.cli rapport exemples/donnees/* -o /tmp/rapports/rapport.html
+          python -m sire_diag.cli modele-inventaire -o /tmp/fiche.xlsx
       - name: POC 1 — interopérabilité
         run: cd poc1-interoperabilite && python -m pytest -q tests
       - name: POC 3 — séries temporelles

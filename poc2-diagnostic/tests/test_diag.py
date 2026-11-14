@@ -12,7 +12,7 @@ sys.path.insert(0, str(RACINE))
 sys.path.insert(0, str(RACINE / "exemples"))
 
 import generer_exemples as gen  # noqa: E402
-from sire_diag import compatibility, dictionary, metadata  # noqa: E402
+from sire_diag import compatibility, dictionary, metadata, modele_inventaire, rapport  # noqa: E402
 from sire_diag.inventory import Inventaire, JeuDonnees, Systeme  # noqa: E402
 from sire_diag.profiler import deviner_unite, profiler  # noqa: E402
 
@@ -115,4 +115,36 @@ def test_inventaire(tmp_path):
     assert s["nb_jeux"] == 2 and s["jeux_avec_donnees_personnelles"] == 1
     assert s["repartition_niveau_cible"] == {"Exposé": 1, "Catalogué": 1}
     assert len(inv.exporter_csv(tmp_path / "export")) == 2
+    inv.fermer()
+
+
+def test_rapport_html(donnees):
+    profils = [profiler(donnees / f, aujourd_hui=AUJ) for f in ("stations.csv", "pluie.csv", "bassins.gpkg")]
+    html = rapport.generer(profils, contexte="Test")
+    assert html.startswith("<!DOCTYPE html>") and "Matrice de compatibilité" in html
+    assert "partiellement compatible" in html and "<script" not in html
+    racine = etree.fromstring(html.encode("utf-8"), etree.HTMLParser())
+    assert len(racine.findall(".//table")) >= 5
+
+
+def test_modele_et_import_inventaire(tmp_path):
+    modele = modele_inventaire.creer_modele(tmp_path / "fiche.xlsx")
+    from openpyxl import load_workbook
+    wb = load_workbook(modele)
+    assert wb.sheetnames == ["institutions", "systemes", "jeux_donnees"]
+    ws = wb["jeux_donnees"]
+    assert ws.data_validations.dataValidation        # listes déroulantes présentes
+    entetes = [c.value for c in ws[1]]
+    ws.cell(row=3, column=entetes.index("code") + 1, value="J1")
+    ws.cell(row=3, column=entetes.index("titre") + 1, value="Débits journaliers")
+    ws.cell(row=3, column=entetes.index("donnees_personnelles") + 1, value="non")
+    ws.cell(row=3, column=entetes.index("niveau_integration_cible") + 1, value="2")
+    wi = wb["institutions"]
+    wi.cell(row=3, column=1, value="MEAH")
+    wi.cell(row=3, column=2, value="Ministère (exemple)")
+    wb.save(tmp_path / "rempli.xlsx")
+    compte = modele_inventaire.importer(tmp_path / "rempli.xlsx", tmp_path / "inv.sqlite")
+    assert compte == {"institutions": 1, "systemes": 0, "jeux_donnees": 1}
+    inv = Inventaire(tmp_path / "inv.sqlite")
+    assert inv.jeux()[0]["niveau_integration_cible"] == 2
     inv.fermer()

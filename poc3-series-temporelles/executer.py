@@ -2,8 +2,9 @@
 
 1. Lecture de CHIRPS mensuel à la source (IRI Data Library), extrait Madagascar
 2. Agrégation de la pluie par bassin versant (HydroBASINS, issus du POC 1)
-3. Export CSV et OGC WaterML 2.0
-4. (option) Chargement dans un serveur OGC SensorThings API
+3. Contrôle qualité (lacunes, valeurs suspectes, IPS-3 simplifié) et rapport HTML
+4. Export CSV et OGC WaterML 2.0
+5. (option) Chargement dans un serveur OGC SensorThings API
 
 Exemples :
     python executer.py --debut 2015-01 --fin 2024-12
@@ -18,7 +19,7 @@ from pathlib import Path
 
 import geopandas as gpd
 
-from sire_series import agregation, chirps, sensorthings, waterml
+from sire_series import agregation, chirps, qualite, sensorthings, waterml
 
 ICI = Path(__file__).resolve().parent
 
@@ -48,6 +49,13 @@ def main() -> int:
     csv = a.sortie / "pluie_mensuelle_par_bassin.csv"
     series.to_csv(csv, index=False)
     print(f"{series[a.id].nunique()} bassins, {len(series)} valeurs -> {csv.name}")
+
+    q = qualite.controler(series, a.id)
+    q.to_csv(a.sortie / "controle_qualite_par_bassin.csv", index=False)
+    (a.sortie / "controle_qualite.html").write_text(qualite.rapport_html(q, a.id), encoding="utf-8")
+    s = qualite.synthese(q, a.id)
+    print(f"Contrôle qualité : {int(s['lacunes'].sum())} lacune(s), {int(s['valeurs_suspectes'].sum())} valeur(s) "
+          f"suspecte(s), {int((s['dernier_ips3'] <= -1).sum())} bassin(s) en sécheresse au dernier mois")
 
     centres = bassins.set_index(a.id).geometry.representative_point()
     xml = waterml.collection(series, a.id, centroides={k: (p.x, p.y) for k, p in centres.items()})

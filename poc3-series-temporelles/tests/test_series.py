@@ -12,7 +12,7 @@ from lxml import etree
 from shapely.geometry import Polygon
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from sire_series import agregation, chirps, sensorthings, waterml  # noqa: E402
+from sire_series import agregation, chirps, qualite, sensorthings, waterml  # noqa: E402
 
 
 @pytest.fixture
@@ -85,3 +85,28 @@ def test_charges_sensorthings(bassins):
     obs = sensorthings.observations(serie)
     assert obs == [{"phenomenonTime": "2025-01-01T00:00:00Z/2025-02-01T00:00:00Z",
                     "resultTime": "2025-02-01T00:00:00Z", "result": 12.5}]
+
+
+def test_controle_qualite():
+    dates = pd.date_range("2015-01-01", "2024-12-01", freq="MS")
+    rng = np.random.default_rng(0)
+    base = np.asarray(100 + 80 * np.sin(2 * np.pi * (np.asarray(dates.month) - 1) / 12))
+    v = base + rng.normal(0, 10, len(dates))
+    v[50] = base[50] + 400            # valeur aberrante
+    v[-3:] = base[-3:] - 60           # trois derniers mois très secs
+    serie = pd.DataFrame({"hybas_id": 1, "date": dates, "pluie_mm": v})
+    serie = serie.drop(index=[20, 21])  # deux mois manquants
+    q = qualite.controler(serie)
+    assert int(q["lacune"].sum()) == 2
+    assert bool(q.loc[q["date"] == dates[50], "suspect"].iloc[0])
+    s = qualite.synthese(q)
+    assert s.loc[0, "dernier_ips3"] <= -1.5
+    assert "sécheresse" in s.loc[0, "classe_actuelle"]
+    html = qualite.rapport_html(q)
+    assert "<svg" in html and "IPS-3" in html
+
+
+def test_classes_ips():
+    assert qualite.classe_ips(-2.3) == "sécheresse extrême"
+    assert qualite.classe_ips(-1.2) == "sécheresse modérée"
+    assert qualite.classe_ips(0.2) == "normal"

@@ -79,3 +79,38 @@ def test_catalogue(tmp_path):
     assert niveaux["usagers-autorisations"] == 0 and niveaux["cod-ab-mdg-adm1"] == 4
     assert all("_metadata-anytext" in r["properties"] for r in recs)
     db.close()
+
+
+def test_verifier_securite_contre_serveur_simule():
+    """Serveur local imitant le mandataire nginx configuré (en-têtes, lecture seule)."""
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    class Mandataire(BaseHTTPRequestHandler):
+        def _entetes(self, code):
+            self.send_response(code)
+            self.send_header("Content-Security-Policy", "default-src 'self'")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("X-Frame-Options", "DENY")
+            self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+            self.end_headers()
+
+        def version_string(self):
+            return "nginx"
+
+        def do_GET(self):
+            self._entetes(403 if self.path.startswith(("/geoserver/web", "/geoserver/rest")) else 200)
+
+        def do_POST(self):
+            self._entetes(403)
+
+        def log_message(self, *a):
+            pass
+
+    srv = HTTPServer(("127.0.0.1", 0), Mandataire)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    m = _module("verifier_securite")
+    res = m.controler(f"http://127.0.0.1:{srv.server_port}", port_db=1)  # port 1 : fermé
+    srv.shutdown()
+    assert all(r.ok for r in res), [r for r in res if not r.ok]
+    assert len(res) == 11

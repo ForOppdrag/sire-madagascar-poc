@@ -6,10 +6,10 @@ cd "$(dirname "$0")"
 
 [ -f .env ] || { cp .env.exemple .env; echo "Fichier .env créé : changez les mots de passe puis relancez."; exit 1; }
 
-echo "1/5  Préparation des données publiques (HydroSHEDS, COD-AB)…"
+echo "1/6  Préparation des données publiques (HydroSHEDS, COD-AB)…"
 python3 scripts/preparer_donnees.py "$@" || echo "   (certaines couches manquent : voir les messages ci-dessus)"
 
-echo "2/5  Points d'eau fictifs du producteur simulé et catalogue…"
+echo "2/6  Points d'eau fictifs du producteur simulé et catalogue…"
 mkdir -p data
 if [ ! -f data/points_eau_fictifs.geojson ]; then
   python3 ../poc2-diagnostic/exemples/generer_exemples.py
@@ -17,18 +17,21 @@ if [ ! -f data/points_eau_fictifs.geojson ]; then
 fi
 python3 scripts/construire_catalogue.py
 
-echo "3/5  Démarrage des services…"
+echo "3/6  Démarrage des services…"
 docker compose up -d
 
-echo "4/5  Chargement du GeoPackage dans PostGIS…"
+echo "4/6  Chargement du GeoPackage dans PostGIS…"
 docker compose run --rm gdal ogr2ogr -f PostgreSQL "PG:" /data/sire.gpkg \
   -lco GEOMETRY_NAME=geom -lco FID=fid -nlt PROMOTE_TO_MULTI -overwrite
 
-echo "5/5  Publication des couches dans GeoServer (attente du démarrage)…"
+echo "5/6  Publication des couches dans GeoServer (attente du démarrage)…"
 for i in $(seq 1 60); do
   curl -sf -o /dev/null http://localhost:8080/geoserver/web/ && break; sleep 5
 done
 python3 scripts/publier_geoserver.py
+
+echo "6/6  Contrôle de sécurité de base…"
+python3 scripts/verifier_securite.py || echo "   (voir les contrôles en échec ci-dessus)"
 
 echo
 echo "Démonstrateur prêt : http://localhost:8000"

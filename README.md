@@ -14,8 +14,8 @@ l'appel d'offres PNUD UNDP-MDG-00895 / PRC0196300 (section 7 du mémoire techniq
 | POC | Ce qu'il démontre | Section du mémoire | État |
 |---|---|---|---|
 | [`poc1-interoperabilite`](poc1-interoperabilite) | La fédération des systèmes et les niveaux d'intégration 0 à 4 : une source consultée à la source, des couches répliquées et harmonisées, un catalogue | 3.3, 5, 7 | Code complet ; services Docker à lancer sur le poste |
-| [`poc2-diagnostic`](poc2-diagnostic) | Un diagnostic outillé : inventaire, profilage de qualité, dictionnaires de données, matrice de compatibilité, fiches ISO 19115 | 3.2, 3.3 | **Fonctionnel et testé** |
-| [`poc3-series-temporelles`](poc3-series-temporelles) | L'échange normalisé de séries hydrométéorologiques : CHIRPS lu à la source, agrégé par bassin, publié en OGC SensorThings API et exporté en WaterML 2.0 | 5.2, 5.3 | Chaîne testée sur données synthétiques ; serveur Docker à lancer |
+| [`poc2-diagnostic`](poc2-diagnostic) | Un diagnostic outillé : inventaire et fiche de terrain Excel, profilage de qualité, dictionnaires de données, matrice de compatibilité, fiches ISO 19115, rapport HTML | 3.2, 3.3 | **Fonctionnel et testé** |
+| [`poc3-series-temporelles`](poc3-series-temporelles) | L'échange normalisé de séries hydrométéorologiques : CHIRPS lu à la source, agrégé par bassin, contrôlé (lacunes, valeurs aberrantes, indice de sécheresse), publié en OGC SensorThings API et exporté en WaterML 2.0 | 5.2, 5.3 | Chaîne testée sur données synthétiques ; serveur Docker à lancer |
 
 ## Prérequis
 
@@ -37,22 +37,29 @@ python -m sire_diag.cli profiler exemples/donnees/* -o rapports/
 python -m sire_diag.cli matrice  exemples/donnees/* -o rapports/
 python -m sire_diag.cli metadonnees exemples/donnees/stations_fictives.csv \
        --titre "Stations fictives" --organisation "Organisation fictive"
+python -m sire_diag.cli rapport exemples/donnees/* -o rapports/rapport_diagnostic.html   # rapport HTML
+python -m sire_diag.cli modele-inventaire -o fiche_inventaire.xlsx                    # fiche de terrain
+python -m sire_diag.cli importer-inventaire fiche_remplie.xlsx inventaire.sqlite
 python exemples/inventaire_exemple.py               # amorce de l'inventaire (SE&AM, Maproom)
-python -m pytest -q tests                           # 8 tests
+python -m pytest -q tests                           # 10 tests
 ```
 
 Défauts détectés automatiquement sur les jeux fictifs : inversion latitude/longitude,
 doublons, valeurs de pluie négatives, dates stockées en texte, systèmes de coordonnées
 différents (WGS 84 / UTM 38S), géométrie invalide, pas de temps et périodes
 incompatibles, clés de jointure de noms différents (`station_id` / `code_station`).
-Des exemples de sorties figurent dans `poc2-diagnostic/exemples/rapports/`.
+Des exemples de sorties figurent dans `poc2-diagnostic/exemples/rapports/`, dont un rapport
+HTML autonome (`rapport_diagnostic.html`, aperçu ci-dessous). Le modèle Excel d'inventaire,
+avec listes déroulantes, sert à la collecte avec les points focaux puis s'importe en une commande.
+
+![Rapport de diagnostic généré sur les jeux fictifs](docs/captures/poc2_rapport_diagnostic.png)
 
 ## POC 1 — Démonstrateur d'interopérabilité
 
 ```bash
 cd poc1-interoperabilite
 cp .env.exemple .env        # puis changer les mots de passe
-./demarrer.sh               # données, services, chargement PostGIS, publication GeoServer
+./demarrer.sh               # données, services, chargement, publication, contrôle de sécurité
 # Démonstrateur : http://localhost:8000
 ```
 
@@ -75,10 +82,12 @@ cd poc3-series-temporelles
 cp .env.exemple .env && docker compose up -d          # FROST-Server : http://localhost:8081/FROST-Server
 python executer.py --debut 2015-01 --fin 2024-12 \
        --sensorthings http://localhost:8081/FROST-Server/v1.1
-python -m pytest -q tests                              # 5 tests
+python -m pytest -q tests                              # 7 tests
 ```
 
 Sorties : `sorties/pluie_mensuelle_par_bassin.csv`, `sorties/pluie_mensuelle_par_bassin.waterml2.xml`,
+`sorties/controle_qualite.html` (lacunes, valeurs suspectes par score z robuste, indice de
+sécheresse IPS-3 simplifié par bassin, avec graphique),
 et les entités SensorThings (un Thing par bassin, un Datastream par série).
 Le POC 3 utilise les bassins préparés par le POC 1 (`poc1-interoperabilite/data/sire.gpkg`).
 
@@ -89,7 +98,10 @@ Le POC 3 utilise les bassins préparés par le POC 1 (`poc1-interoperabilite/dat
 - Mandataire nginx en lecture seule (`GET`/`HEAD`), API REST et interface d'administration de GeoServer non relayées
 - En-têtes de sécurité (CSP, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`)
 - Échappement systématique des données affichées dans la page web (prévention XSS)
-- Images Docker paramétrables pour suivre les versions corrigées
+- Version de nginx masquée (`server_tokens off`)
+- Images Docker paramétrables, dépendances surveillées par Dependabot (chaîne d'approvisionnement, OWASP A03:2025)
+- Contrôle automatisé de la pile lancée : `python scripts/verifier_securite.py` (11 contrôles, exécuté par `demarrer.sh`)
+- Politique de signalement des vulnérabilités : [`SECURITY.md`](SECURITY.md)
 
 Ces mesures conviennent à une démonstration locale ; elles ne remplacent pas les
 exigences de sécurité du futur SIRE (section 6 du mémoire).
@@ -121,13 +133,15 @@ Les données tierces restent soumises à leurs propres conditions (tableau ci-de
 
 ## Ce qui a été vérifié
 
-- Intégration continue GitHub Actions : analyse statique, 15 tests, validation des fichiers Docker Compose, du JavaScript et du script de démarrage, à chaque modification
-- POC 2 : 8 tests unitaires, exécution complète de la ligne de commande sur les jeux fictifs
+- Intégration continue GitHub Actions : analyse statique, 20 tests, validation des fichiers Docker Compose, du JavaScript et du script de démarrage, à chaque modification
+- POC 2 : 10 tests (profilage, compatibilité, dictionnaire, métadonnées, inventaire, rapport HTML,
+  modèle Excel et import), exécution complète de la ligne de commande sur les jeux fictifs
 - POC 1 : configurations pygeoapi validées et services testés localement (recherche dans le
   catalogue, lecture des points d'eau) ; préparation des données testée sur des archives au
-  format des sources réelles ; `docker compose config` valide ; JavaScript vérifié
-- POC 3 : 5 tests unitaires (conversion du temps IRI, agrégation pondérée, WaterML 2.0,
-  charges SensorThings) ; chaîne complète exécutée sur un extrait synthétique
+  format des sources réelles ; contrôle de sécurité testé contre un mandataire simulé ;
+  `docker compose config` valide ; JavaScript vérifié
+- POC 3 : 7 tests (conversion du temps IRI, agrégation pondérée, WaterML 2.0, charges
+  SensorThings, détection de lacunes et de valeurs aberrantes, classes de sécheresse) ; chaîne complète exécutée sur un extrait synthétique
 - **Non vérifié ici** (pas de Docker ni d'accès aux sites de données dans l'environnement de
   développement) : démarrage des conteneurs GeoServer, PostGIS et FROST, téléchargements réels,
   validation XSD du WaterML. À faire lors du premier lancement sur le poste.

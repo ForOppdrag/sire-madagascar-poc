@@ -1,0 +1,13 @@
+# Surveillance de la chaîne d'approvisionnement logicielle
+# (OWASP Top 10:2025 — A03 Software Supply Chain Failures)
+version: 2
+updates:
+  - package-ecosystem: pip
+    directories: ["/poc1-interoperabilite", "/poc2-diagnostic", "/poc3-series-temporelles"]
+    schedule: { interval: weekly }
+  - package-ecosystem: docker-compose
+    directories: ["/poc1-interoperabilite", "/poc3-series-temporelles"]
+    schedule: { interval: weekly }
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule: { interval: weekly }
