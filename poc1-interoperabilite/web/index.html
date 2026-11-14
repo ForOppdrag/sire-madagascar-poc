@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIRE — démonstrateur d'interopérabilité</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.2.1/ol.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>SIRE — démonstrateur d'interopérabilité</h1>
+    <p>Illustration méthodologique réalisée avec des logiciels libres et des données publiques ou fictives. Ce n'est pas une préfiguration du futur SIRE.</p>
+  </header>
+  <main>
+    <div id="carte" role="application" aria-label="Carte des couches du démonstrateur"></div>
+    <aside>
+      <section>
+        <h2>Couches et niveau d'intégration</h2>
+        <ul id="couches" class="couches"></ul>
+      </section>
+      <section>
+        <h2>Catalogue</h2>
+        <form id="recherche">
+          <label for="q">Rechercher un jeu de données</label>
+          <div class="ligne">
+            <input id="q" name="q" type="search" placeholder="ex. bassins, pluie, points d'eau">
+            <button type="submit">Chercher</button>
+          </div>
+        </form>
+        <ol id="resultats" class="resultats"></ol>
+      </section>
+      <section>
+        <h2>Objet sélectionné</h2>
+        <div id="info" class="info">Cliquez sur un point d'eau ou un bassin.</div>
+      </section>
+    </aside>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/ol@v10.2.1/dist/ol.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

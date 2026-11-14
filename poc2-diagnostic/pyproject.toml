@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sire-diag"
+version = "0.1.0"
+description = "Kit de diagnostic automatisé des données — POC 2 du SIRE Madagascar"
+requires-python = ">=3.10"
+dependencies = [
+  "pandas>=2.1",
+  "numpy>=1.26",
+  "openpyxl>=3.1",
+  "geopandas>=0.14",
+  "pyproj>=3.6",
+  "shapely>=2.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "lxml>=5"]
+
+[project.scripts]
+sire-diag = "sire_diag.cli:main"
+
+[tool.setuptools]
+packages = ["sire_diag"]

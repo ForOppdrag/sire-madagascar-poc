@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:gml="http://www.opengis.net/gml">
+  <gmd:fileIdentifier><gco:CharacterString>a2bc8aab-bd95-43c8-aeb3-93334b771c80</gco:CharacterString></gmd:fileIdentifier>
+  <gmd:language><gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre">fre</gmd:LanguageCode></gmd:language>
+  <gmd:hierarchyLevel><gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</gmd:MD_ScopeCode></gmd:hierarchyLevel>
+  <gmd:contact>
+    <gmd:CI_ResponsibleParty>
+      <gmd:organisationName><gco:CharacterString>Organisation fictive</gco:CharacterString></gmd:organisationName>
+      <gmd:role><gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode></gmd:role>
+    </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp><gco:Date>2026-11-14</gco:Date></gmd:dateStamp>
+  <gmd:metadataStandardName><gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString></gmd:metadataStandardName>
+  <gmd:identificationInfo>
+    <gmd:MD_DataIdentification>
+      <gmd:citation>
+        <gmd:CI_Citation>
+          <gmd:title><gco:CharacterString>Stations fictives</gco:CharacterString></gmd:title>
+          <gmd:date><gmd:CI_Date>
+            <gmd:date><gco:Date>2026-11-14</gco:Date></gmd:date>
+            <gmd:dateType><gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode></gmd:dateType>
+          </gmd:CI_Date></gmd:date>
+        </gmd:CI_Citation>
+      </gmd:citation>
+      <gmd:abstract><gco:CharacterString>Jeu de données Stations fictives.</gco:CharacterString></gmd:abstract>
+      <gmd:descriptiveKeywords><gmd:MD_Keywords>
+        <gmd:keyword><gco:CharacterString>eau</gco:CharacterString></gmd:keyword>
+        <gmd:keyword><gco:CharacterString>Madagascar</gco:CharacterString></gmd:keyword>
+        <gmd:keyword><gco:CharacterString>SIRE</gco:CharacterString></gmd:keyword>
+      </gmd:MD_Keywords></gmd:descriptiveKeywords>
+      <gmd:language><gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre">fre</gmd:LanguageCode></gmd:language>
+      <gmd:topicCategory><gmd:MD_TopicCategoryCode>inlandWaters</gmd:MD_TopicCategoryCode></gmd:topicCategory>
+      <gmd:extent><gmd:EX_Extent>
+        <gmd:geographicElement><gmd:EX_GeographicBoundingBox>
+          <gmd:westBoundLongitude><gco:Decimal>44.24092</gco:Decimal></gmd:westBoundLongitude>
+          <gmd:eastBoundLongitude><gco:Decimal>49.33884</gco:Decimal></gmd:eastBoundLongitude>
+          <gmd:southBoundLatitude><gco:Decimal>-23.7661</gco:Decimal></gmd:southBoundLatitude>
+          <gmd:northBoundLatitude><gco:Decimal>48.28111</gco:Decimal></gmd:northBoundLatitude>
+        </gmd:EX_GeographicBoundingBox></gmd:geographicElement>
+      </gmd:EX_Extent></gmd:extent>
+    </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:dataQualityInfo>
+    <gmd:DQ_DataQuality>
+      <gmd:scope><gmd:DQ_Scope><gmd:level><gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</gmd:MD_ScopeCode></gmd:level></gmd:DQ_Scope></gmd:scope>
+      <gmd:lineage><gmd:LI_Lineage><gmd:statement><gco:CharacterString>Profil automatique : 21 objets, complétude 99%, score de qualité indicatif 82.3/100. Alertes : « date_installation » : date stockée en texte, conversion nécessaire avant intégration; 1 ligne(s) entièrement dupliquée(s); 1 objet(s) hors de l'emprise de Madagascar (inversion lat/lon ou système de coordonnées erroné ?); Données anciennes : dernière valeur il y a 4040 jours.</gco:CharacterString></gmd:statement></gmd:LI_Lineage></gmd:lineage>
+    </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

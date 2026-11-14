@@ -1,0 +1,75 @@
+# Description des jeux de données du démonstrateur, transformée en fiches
+# OGC API - Records par scripts/construire_catalogue.py.
+# niveau : 0 catalogué · 1 consultable · 2 exposé · 3 répliqué et harmonisé · 4 référence
+jeux:
+  - id: hydrobasins-mdg-n6
+    titre: Bassins versants de Madagascar (HydroBASINS, niveau 6)
+    description: >-
+      Découpage en bassins versants issu de HydroBASINS v1c (WWF / HydroSHEDS),
+      découpé sur Madagascar et chargé dans la base du SIRE après contrôle de qualité.
+    producteur: WWF / HydroSHEDS (source publique)
+    niveau: 3
+    mots_cles: [bassins versants, hydrographie, référentiel pivot]
+    service: { type: OGC WMS / WFS, href: /geoserver/sire/wms, couche: "sire:bassins" }
+    licence: Licence HydroSHEDS (usage libre, citation obligatoire)
+    bbox: [43.0, -25.8, 50.7, -11.8]
+
+  - id: hydrorivers-mdg
+    titre: Réseau hydrographique de Madagascar (HydroRIVERS)
+    description: >-
+      Tronçons de cours d'eau issus de HydroRIVERS v1.0, filtrés sur les cours d'eau
+      principaux et répliqués dans la base du SIRE.
+    producteur: WWF / HydroSHEDS (source publique)
+    niveau: 3
+    mots_cles: [cours d'eau, hydrographie]
+    service: { type: OGC WMS / WFS, href: /geoserver/sire/wms, couche: "sire:rivieres" }
+    licence: Licence HydroSHEDS (usage libre, citation obligatoire)
+    bbox: [43.0, -25.8, 50.7, -11.8]
+
+  - id: cod-ab-mdg-adm1
+    titre: Limites administratives de Madagascar — régions (COD-AB)
+    description: >-
+      Limites des régions issues du jeu COD-AB publié sur HDX, utilisées comme
+      référentiel administratif pivot (codes P-code).
+    producteur: BNGRC / OCHA (source publique, HDX)
+    niveau: 4
+    mots_cles: [limites administratives, référentiel pivot, P-code]
+    service: { type: OGC WMS / WFS, href: /geoserver/sire/wms, couche: "sire:regions" }
+    licence: Voir les conditions du jeu sur HDX
+    bbox: [43.0, -25.8, 50.7, -11.8]
+
+  - id: points-eau-simules
+    titre: Points d'eau du producteur simulé (données fictives)
+    description: >-
+      Jeu FICTIF exposé par un producteur simulé en OGC API - Features. Le SIRE le
+      consulte à la source, sans en conserver de copie.
+    producteur: Producteur simulé (démonstrateur)
+    niveau: 2
+    mots_cles: [points d'eau, données fictives]
+    service: { type: OGC API - Features, href: /producteur/collections/points_eau/items }
+    licence: Données fictives
+    bbox: [43.0, -25.8, 50.7, -11.8]
+
+  - id: chirps-mensuel
+    titre: Pluviométrie mensuelle CHIRPS v2.0 (IRI Data Library)
+    description: >-
+      Estimations de pluie mensuelles à 0,05°, consultées directement sur l'IRI Data
+      Library (Columbia University). Elles sont agrégées par bassin versant dans le POC 3.
+    producteur: UCSB Climate Hazards Center / IRI Data Library (source publique)
+    niveau: 1
+    mots_cles: [pluviométrie, climat, séries temporelles]
+    service: { type: OPeNDAP / Ingrid, href: "https://iridl.ldeo.columbia.edu/SOURCES/.UCSB/.CHIRPS/.v2p0/.monthly/.global/.precipitation" }
+    licence: CHIRPS (domaine public, citation demandée)
+    bbox: [43.0, -25.8, 50.7, -11.8]
+
+  - id: usagers-autorisations
+    titre: Registre des autorisations de prélèvement (exemple de jeu sensible)
+    description: >-
+      Exemple de jeu contenant des données personnelles : seule sa fiche de
+      métadonnées est publiée, la donnée reste chez son détenteur.
+    producteur: Institution détentrice (exemple)
+    niveau: 0
+    mots_cles: [autorisations, données personnelles, accès restreint]
+    service: null
+    licence: Accès restreint
+    bbox: [43.0, -25.8, 50.7, -11.8]

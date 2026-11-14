@@ -1,0 +1,84 @@
+{
+  "source": "exemples/donnees/pluie_mensuelle_fictive.csv",
+  "nb_lignes": 720,
+  "nb_colonnes": 3,
+  "colonnes": [
+    {
+      "nom": "station_id",
+      "type_infere": "texte",
+      "nb_valeurs": 720,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 10,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "ST001",
+        "ST002",
+        "ST003"
+      ]
+    },
+    {
+      "nom": "date",
+      "type_infere": "date stockée en texte",
+      "nb_valeurs": 720,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 72,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "2018-01-01",
+        "2018-02-01",
+        "2018-03-01"
+      ]
+    },
+    {
+      "nom": "pluie_mm",
+      "type_infere": "décimal",
+      "nb_valeurs": 680,
+      "nb_manquants": 40,
+      "taux_completude": 0.9444,
+      "nb_distincts": 601,
+      "identifiant_candidat": false,
+      "unite_devinee": "mm",
+      "minimum": "-12.0",
+      "maximum": "603.6",
+      "moyenne": 117.7284,
+      "nb_negatifs_suspects": 1,
+      "exemples": [
+        "162.3",
+        "124.1",
+        "24.3"
+      ]
+    }
+  ],
+  "lignes_dupliquees": 0,
+  "taux_completude_global": 0.9815,
+  "geographique": false,
+  "crs": null,
+  "types_geometrie": [],
+  "geometries_invalides": 0,
+  "geometries_vides": 0,
+  "emprise": null,
+  "hors_madagascar": 0,
+  "colonne_temporelle": "date",
+  "date_min": "2018-01-01",
+  "date_max": "2023-12-01",
+  "pas_de_temps": "mensuel",
+  "anciennete_jours": 1079,
+  "alertes": [
+    "« date » : date stockée en texte, conversion nécessaire avant intégration",
+    "« pluie_mm » : 1 valeur(s) négative(s) physiquement impossible(s)",
+    "Données anciennes : dernière valeur il y a 1079 jours"
+  ],
+  "score_qualite": 90.4
+}

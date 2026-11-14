@@ -1,0 +1,81 @@
+# Producteur SIMULÉ : représente une institution qui expose elle-même ses
+# données en OGC API - Features. Le SIRE les consulte à la source, sans copie
+# (niveaux d'intégration 1 et 2).
+server:
+  bind:
+    host: 0.0.0.0
+    port: 80
+  url: ${PRODUCTEUR_URL}
+  mimetype: application/json; charset=UTF-8
+  encoding: utf-8
+  languages:
+    - fr-FR
+  cors: true
+  pretty_print: true
+  limits:
+    default_items: 500
+    max_items: 5000
+  map:
+    url: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+    attribution: '&copy; contributeurs OpenStreetMap'
+
+logging:
+  level: ERROR
+
+metadata:
+  identification:
+    title:
+      fr: Producteur simulé — services de données
+    description:
+      fr: Service OGC API - Features d'une institution productrice simulée (données fictives)
+    keywords:
+      fr:
+        - eau
+        - points d'eau
+        - Madagascar
+    keywords_type: theme
+    terms_of_service: https://creativecommons.org/licenses/by/4.0/
+    url: https://example.org
+  license:
+    name: CC-BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  provider:
+    name: Producteur simulé (POC SIRE)
+    url: https://example.org
+  contact:
+    name: Équipe POC SIRE
+    position: Démonstrateur
+    address: Antananarivo
+    city: Antananarivo
+    stateorprovince: Analamanga
+    postalcode: '101'
+    country: Madagascar
+    email: contact@example.org
+    url: https://example.org
+    role: pointOfContact
+
+resources:
+  points_eau:
+    type: collection
+    title:
+      fr: Points d'eau (données fictives)
+    description:
+      fr: Puits, forages et sources — jeu FICTIF généré pour la démonstration
+    keywords:
+      fr:
+        - points d'eau
+        - eau potable
+    links:
+      - type: text/html
+        rel: canonical
+        title: Documentation du POC
+        href: https://example.org
+    extents:
+      spatial:
+        bbox: [43.0, -25.8, 50.7, -11.8]
+        crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+    providers:
+      - type: feature
+        name: GeoJSON
+        data: /data/points_eau_fictifs.geojson
+        id_field: id_point

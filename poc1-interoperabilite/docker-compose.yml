@@ -1,0 +1,88 @@
+# POC 1 — Démonstrateur d'interopérabilité du SIRE
+#
+#   web         : page cartographique OpenLayers + mandataire (http://localhost:8000)
+#   postgis     : base du SIRE (données répliquées et harmonisées — niveaux 3 et 4)
+#   geoserver   : diffusion OGC WMS / WFS des couches du SIRE
+#   catalogue   : catalogue OGC API - Records (niveau 0 et index de tous les jeux)
+#   producteur  : institution SIMULÉE exposant ses données en OGC API - Features
+#                 (le SIRE les consulte à la source, sans copie — niveaux 1 et 2)
+#   gdal        : outil ponctuel de chargement (docker compose run --rm gdal …)
+
+name: sire-poc1
+
+services:
+  postgis:
+    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.4}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sire}
+      POSTGRES_USER: ${POSTGRES_USER:-sire}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?définir POSTGRES_PASSWORD dans .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sire} -d ${POSTGRES_DB:-sire}"]
+      interval: 10s
+      retries: 10
+    # port non exposé sur l'hôte : la base n'est accessible qu'au réseau interne
+
+  geoserver:
+    image: ${GEOSERVER_IMAGE:-kartoza/geoserver:2.25.2}
+    environment:
+      GEOSERVER_ADMIN_USER: ${GEOSERVER_ADMIN_USER:-admin}
+      GEOSERVER_ADMIN_PASSWORD: ${GEOSERVER_ADMIN_PASSWORD:?définir GEOSERVER_ADMIN_PASSWORD dans .env}
+      INITIAL_MEMORY: 512M
+      MAXIMUM_MEMORY: 1G
+    volumes:
+      - geoserver_data:/opt/geoserver/data_dir
+    ports:
+      - "127.0.0.1:8080:8080"   # administration, limitée au poste local
+    depends_on:
+      postgis:
+        condition: service_healthy
+
+  catalogue:
+    image: ${PYGEOAPI_IMAGE:-geopython/pygeoapi:latest}
+    environment:
+      PYGEOAPI_CONFIG: /pygeoapi/local.config.yml
+      PYGEOAPI_OPENAPI: /pygeoapi/local.openapi.yml
+      CATALOGUE_URL: ${PUBLIC_URL:-http://localhost:8000}/catalogue
+    volumes:
+      - ./config/catalogue.yml:/pygeoapi/local.config.yml:ro
+      - ./data/catalogue.tinydb:/data/catalogue.tinydb
+
+  producteur:
+    image: ${PYGEOAPI_IMAGE:-geopython/pygeoapi:latest}
+    environment:
+      PYGEOAPI_CONFIG: /pygeoapi/local.config.yml
+      PYGEOAPI_OPENAPI: /pygeoapi/local.openapi.yml
+      PRODUCTEUR_URL: ${PUBLIC_URL:-http://localhost:8000}/producteur
+    volumes:
+      - ./config/producteur.yml:/pygeoapi/local.config.yml:ro
+      - ./data/points_eau_fictifs.geojson:/data/points_eau_fictifs.geojson:ro
+
+  web:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "127.0.0.1:8000:80"
+    depends_on: [geoserver, catalogue, producteur]
+
+  gdal:
+    image: ${GDAL_IMAGE:-ghcr.io/osgeo/gdal:ubuntu-small-3.9.2}
+    profiles: ["outils"]
+    volumes:
+      - ./data:/data
+    environment:
+      PGHOST: postgis
+      PGDATABASE: ${POSTGRES_DB:-sire}
+      PGUSER: ${POSTGRES_USER:-sire}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      postgis:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  geoserver_data:

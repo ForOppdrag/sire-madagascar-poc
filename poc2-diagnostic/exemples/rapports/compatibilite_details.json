@@ -1,0 +1,159 @@
+[
+  {
+    "a": "exemples/donnees/bassins_fictifs.gpkg",
+    "b": "exemples/donnees/debits_journaliers_fictifs.xlsx",
+    "champs_communs": [],
+    "cle_jointure": null,
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "non mutualisable en l'état",
+    "actions": [
+      "Définir un identifiant commun (ex. code station ou code commune du référentiel pivot)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/bassins_fictifs.gpkg",
+    "b": "exemples/donnees/pluie_mensuelle_fictive.csv",
+    "champs_communs": [],
+    "cle_jointure": null,
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "non mutualisable en l'état",
+    "actions": [
+      "Définir un identifiant commun (ex. code station ou code commune du référentiel pivot)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/bassins_fictifs.gpkg",
+    "b": "exemples/donnees/points_eau_fictifs.geojson",
+    "champs_communs": [],
+    "cle_jointure": null,
+    "meme_crs": false,
+    "emprises_recouvrantes": true,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "partiellement compatible",
+    "actions": [
+      "Définir un identifiant commun (ex. code station ou code commune du référentiel pivot)",
+      "Reprojeter vers un système commun (EPSG:32738 / EPSG:4326)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/bassins_fictifs.gpkg",
+    "b": "exemples/donnees/stations_fictives.csv",
+    "champs_communs": [
+      "nom"
+    ],
+    "cle_jointure": "nom",
+    "meme_crs": false,
+    "emprises_recouvrantes": true,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "partiellement compatible",
+    "actions": [
+      "Reprojeter vers un système commun (EPSG:32738 / EPSG:4326 (supposé, colonnes lat/lon))"
+    ]
+  },
+  {
+    "a": "exemples/donnees/debits_journaliers_fictifs.xlsx",
+    "b": "exemples/donnees/pluie_mensuelle_fictive.csv",
+    "champs_communs": [
+      "date"
+    ],
+    "cle_jointure": "code_station ↔ station_id",
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": false,
+    "periodes_recouvrantes": false,
+    "conflits_unites": [],
+    "verdict": "non mutualisable en l'état",
+    "actions": [
+      "Aligner les noms de la clé de jointure (code_station / station_id)",
+      "Harmoniser le type du champ « date » (date / date stockée en texte)",
+      "Agréger au pas de temps commun le plus grossier (journalier / mensuel)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/debits_journaliers_fictifs.xlsx",
+    "b": "exemples/donnees/points_eau_fictifs.geojson",
+    "champs_communs": [],
+    "cle_jointure": null,
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "non mutualisable en l'état",
+    "actions": [
+      "Définir un identifiant commun (ex. code station ou code commune du référentiel pivot)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/debits_journaliers_fictifs.xlsx",
+    "b": "exemples/donnees/stations_fictives.csv",
+    "champs_communs": [
+      "code_station"
+    ],
+    "cle_jointure": "code_station",
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "compatible",
+    "actions": []
+  },
+  {
+    "a": "exemples/donnees/pluie_mensuelle_fictive.csv",
+    "b": "exemples/donnees/points_eau_fictifs.geojson",
+    "champs_communs": [],
+    "cle_jointure": null,
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "non mutualisable en l'état",
+    "actions": [
+      "Définir un identifiant commun (ex. code station ou code commune du référentiel pivot)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/pluie_mensuelle_fictive.csv",
+    "b": "exemples/donnees/stations_fictives.csv",
+    "champs_communs": [],
+    "cle_jointure": "station_id ↔ code_station",
+    "meme_crs": null,
+    "emprises_recouvrantes": null,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "partiellement compatible",
+    "actions": [
+      "Aligner les noms de la clé de jointure (station_id / code_station)"
+    ]
+  },
+  {
+    "a": "exemples/donnees/points_eau_fictifs.geojson",
+    "b": "exemples/donnees/stations_fictives.csv",
+    "champs_communs": [],
+    "cle_jointure": null,
+    "meme_crs": true,
+    "emprises_recouvrantes": true,
+    "meme_pas_de_temps": null,
+    "periodes_recouvrantes": null,
+    "conflits_unites": [],
+    "verdict": "partiellement compatible",
+    "actions": [
+      "Définir un identifiant commun (ex. code station ou code commune du référentiel pivot)"
+    ]
+  }
+]

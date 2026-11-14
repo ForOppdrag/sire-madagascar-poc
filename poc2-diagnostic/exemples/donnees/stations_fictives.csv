@@ -1,0 +1,22 @@
+code_station,nom,latitude,longitude,bassin,date_installation
+ST001,Station fictive 1,-15.59951,48.16948,Onilahy,01/01/1995
+ST002,Station fictive 2,-19.4529,45.94989,Betsiboka,05/02/1996
+ST003,Station fictive 3,-14.62612,49.33884,Ikopa,11/03/1997
+ST004,Station fictive 4,-16.48027,48.91217,Onilahy,15/04/1998
+ST005,Station fictive 5,48.28111,48.28111,Mangoro,20/05/1999
+ST006,Station fictive 6,-13.28034,45.07051,Mangoro,23/06/2000
+ST007,Station fictive 7,-15.74689,46.56697,Ikopa,28/07/2001
+ST008,Station fictive 8,-15.46026,44.24092,,01/09/2002
+ST009,Station fictive 9,-23.02669,44.84859,Onilahy,06/10/2003
+ST010,Station fictive 10,-19.32056,47.75677,Onilahy,09/11/2004
+ST011,Station fictive 11,-20.23582,48.09619,Betsiboka,14/12/2005
+ST012,Station fictive 12,-13.8422,49.3213,Onilahy,18/01/2007
+ST013,Station fictive 13,-17.09555,45.79204,Onilahy,22/02/2008
+ST014,Station fictive 14,-15.03824,46.03753,Betsiboka,28/03/2009
+ST015,Station fictive 15,-19.40074,46.58256,Onilahy,02/05/2010
+ST016,Station fictive 16,-21.88675,45.04209,Betsiboka,06/06/2011
+ST017,Station fictive 17,-18.12227,44.71457,Ikopa,10/07/2012
+ST018,Station fictive 18,-23.7661,46.61638,Mangoro,14/08/2013
+ST019,Station fictive 19,-14.98224,45.248,Mangoro,18/09/2014
+ST020,Station fictive 20,-17.23586,47.68398,Ikopa,23/10/2015
+ST003,Station fictive 3,-14.62612,49.33884,Ikopa,11/03/1997

@@ -1,0 +1,6 @@
+,bassins_fictifs.gpkg,debits_journaliers_fictifs.xlsx,pluie_mensuelle_fictive.csv,points_eau_fictifs.geojson,stations_fictives.csv
+bassins_fictifs.gpkg,—,non mutualisable en l'état,non mutualisable en l'état,partiellement compatible,partiellement compatible
+debits_journaliers_fictifs.xlsx,non mutualisable en l'état,—,non mutualisable en l'état,non mutualisable en l'état,compatible
+pluie_mensuelle_fictive.csv,non mutualisable en l'état,non mutualisable en l'état,—,non mutualisable en l'état,partiellement compatible
+points_eau_fictifs.geojson,partiellement compatible,non mutualisable en l'état,non mutualisable en l'état,—,partiellement compatible
+stations_fictives.csv,partiellement compatible,compatible,partiellement compatible,partiellement compatible,—

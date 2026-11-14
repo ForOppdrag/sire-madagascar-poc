@@ -1,0 +1,88 @@
+{
+  "source": "exemples/donnees/points_eau_fictifs.geojson",
+  "nb_lignes": 30,
+  "nb_colonnes": 3,
+  "colonnes": [
+    {
+      "nom": "id_point",
+      "type_infere": "entier",
+      "nb_valeurs": 30,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 30,
+      "identifiant_candidat": true,
+      "unite_devinee": null,
+      "minimum": "1",
+      "maximum": "30",
+      "moyenne": 15.5,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "nom": "type",
+      "type_infere": "texte",
+      "nb_valeurs": 30,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 3,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "forage",
+        "source",
+        "puits"
+      ]
+    },
+    {
+      "nom": "fonctionnel",
+      "type_infere": "texte",
+      "nb_valeurs": 22,
+      "nb_manquants": 8,
+      "taux_completude": 0.7333,
+      "nb_distincts": 2,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "oui",
+        "non"
+      ]
+    }
+  ],
+  "lignes_dupliquees": 0,
+  "taux_completude_global": 0.9111,
+  "geographique": true,
+  "crs": "EPSG:4326",
+  "types_geometrie": [
+    "Point"
+  ],
+  "geometries_invalides": 0,
+  "geometries_vides": 0,
+  "emprise": [
+    44.01489,
+    -24.13028,
+    49.34597,
+    -13.10497
+  ],
+  "hors_madagascar": 0,
+  "colonne_temporelle": null,
+  "date_min": null,
+  "date_max": null,
+  "pas_de_temps": null,
+  "anciennete_jours": null,
+  "alertes": [
+    "« fonctionnel » : complétude faible (73%)"
+  ],
+  "score_qualite": 96.9
+}

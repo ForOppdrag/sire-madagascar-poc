@@ -1,0 +1,82 @@
+{
+  "source": "exemples/donnees/debits_journaliers_fictifs.xlsx",
+  "nb_lignes": 1098,
+  "nb_colonnes": 3,
+  "colonnes": [
+    {
+      "nom": "code_station",
+      "type_infere": "texte",
+      "nb_valeurs": 1098,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 3,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "ST001",
+        "ST002",
+        "ST003"
+      ]
+    },
+    {
+      "nom": "date",
+      "type_infere": "date",
+      "nb_valeurs": 1098,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 366,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "2024-01-01 00:00:00",
+        "2024-01-02 00:00:00",
+        "2024-01-03 00:00:00"
+      ]
+    },
+    {
+      "nom": "debit_m3s",
+      "type_infere": "décimal",
+      "nb_valeurs": 1098,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 964,
+      "identifiant_candidat": false,
+      "unite_devinee": "m³/s",
+      "minimum": "3.2",
+      "maximum": "115.42",
+      "moyenne": 23.4741,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "24.18",
+        "36.19",
+        "9.99"
+      ]
+    }
+  ],
+  "lignes_dupliquees": 0,
+  "taux_completude_global": 1.0,
+  "geographique": false,
+  "crs": null,
+  "types_geometrie": [],
+  "geometries_invalides": 0,
+  "geometries_vides": 0,
+  "emprise": null,
+  "hors_madagascar": 0,
+  "colonne_temporelle": "date",
+  "date_min": "2024-01-01",
+  "date_max": "2024-12-31",
+  "pas_de_temps": "journalier",
+  "anciennete_jours": 683,
+  "alertes": [
+    "Données anciennes : dernière valeur il y a 683 jours"
+  ],
+  "score_qualite": 94.4
+}

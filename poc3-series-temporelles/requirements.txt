@@ -1,0 +1,7 @@
+numpy>=1.26
+pandas>=2.1
+xarray>=2024.1
+netCDF4>=1.6
+geopandas>=0.14
+requests>=2.31
+lxml>=5.0

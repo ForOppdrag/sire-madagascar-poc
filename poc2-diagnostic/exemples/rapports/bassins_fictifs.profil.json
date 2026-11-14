@@ -1,0 +1,89 @@
+{
+  "source": "exemples/donnees/bassins_fictifs.gpkg",
+  "nb_lignes": 3,
+  "nb_colonnes": 3,
+  "colonnes": [
+    {
+      "nom": "code_bassin",
+      "type_infere": "texte",
+      "nb_valeurs": 3,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 3,
+      "identifiant_candidat": true,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "B01",
+        "B02",
+        "B03"
+      ]
+    },
+    {
+      "nom": "nom",
+      "type_infere": "texte",
+      "nb_valeurs": 3,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 3,
+      "identifiant_candidat": true,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "Bassin fictif A",
+        "Bassin fictif B",
+        "Bassin fictif C"
+      ]
+    },
+    {
+      "nom": "superficie_km2",
+      "type_infere": "décimal",
+      "nb_valeurs": 2,
+      "nb_manquants": 1,
+      "taux_completude": 0.6667,
+      "nb_distincts": 2,
+      "identifiant_candidat": false,
+      "unite_devinee": "km²",
+      "minimum": "12000.0",
+      "maximum": "31000.0",
+      "moyenne": 21500.0,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "12000.0",
+        "31000.0"
+      ]
+    }
+  ],
+  "lignes_dupliquees": 0,
+  "taux_completude_global": 0.8889,
+  "geographique": true,
+  "crs": "EPSG:32738",
+  "types_geometrie": [
+    "Polygon"
+  ],
+  "geometries_invalides": 1,
+  "geometries_vides": 0,
+  "emprise": [
+    46.0,
+    -20.5,
+    49.0,
+    -16.0
+  ],
+  "hors_madagascar": 0,
+  "colonne_temporelle": null,
+  "date_min": null,
+  "date_max": null,
+  "pas_de_temps": null,
+  "anciennete_jours": null,
+  "alertes": [
+    "« superficie_km2 » : complétude faible (67%)",
+    "1 géométrie(s) invalide(s)"
+  ],
+  "score_qualite": 86.1
+}

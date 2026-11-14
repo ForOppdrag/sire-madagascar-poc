@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+poc1-interoperabilite/data/brut/
+poc1-interoperabilite/data/sire.gpkg
+poc3-series-temporelles/sorties/
+.ruff_cache/
+*.gpkg
+*.xlsx
+*.sqlite

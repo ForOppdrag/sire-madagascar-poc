@@ -1,0 +1,5 @@
+geopandas>=0.14
+pyogrio>=0.7
+requests>=2.31
+pyyaml>=6.0
+tinydb>=4.8

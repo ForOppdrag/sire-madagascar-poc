@@ -1,0 +1,147 @@
+{
+  "source": "exemples/donnees/stations_fictives.csv",
+  "nb_lignes": 21,
+  "nb_colonnes": 6,
+  "colonnes": [
+    {
+      "nom": "code_station",
+      "type_infere": "texte",
+      "nb_valeurs": 21,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 20,
+      "identifiant_candidat": true,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "ST001",
+        "ST002",
+        "ST003"
+      ]
+    },
+    {
+      "nom": "nom",
+      "type_infere": "texte",
+      "nb_valeurs": 21,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 20,
+      "identifiant_candidat": true,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "Station fictive 1",
+        "Station fictive 2",
+        "Station fictive 3"
+      ]
+    },
+    {
+      "nom": "latitude",
+      "type_infere": "décimal",
+      "nb_valeurs": 21,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 20,
+      "identifiant_candidat": false,
+      "unite_devinee": "degrés (latitude)",
+      "minimum": "-23.7661",
+      "maximum": "48.28111",
+      "moyenne": -14.3307,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "-15.59951",
+        "-19.4529",
+        "-14.62612"
+      ]
+    },
+    {
+      "nom": "longitude",
+      "type_infere": "décimal",
+      "nb_valeurs": 21,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 20,
+      "identifiant_candidat": false,
+      "unite_devinee": "degrés (longitude)",
+      "minimum": "44.24092",
+      "maximum": "49.33884",
+      "moyenne": 46.8385,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "48.16948",
+        "45.94989",
+        "49.33884"
+      ]
+    },
+    {
+      "nom": "bassin",
+      "type_infere": "texte",
+      "nb_valeurs": 20,
+      "nb_manquants": 1,
+      "taux_completude": 0.9524,
+      "nb_distincts": 4,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "Onilahy",
+        "Betsiboka",
+        "Ikopa"
+      ]
+    },
+    {
+      "nom": "date_installation",
+      "type_infere": "date stockée en texte",
+      "nb_valeurs": 21,
+      "nb_manquants": 0,
+      "taux_completude": 1.0,
+      "nb_distincts": 20,
+      "identifiant_candidat": false,
+      "unite_devinee": null,
+      "minimum": null,
+      "maximum": null,
+      "moyenne": null,
+      "nb_negatifs_suspects": 0,
+      "exemples": [
+        "01/01/1995",
+        "05/02/1996",
+        "11/03/1997"
+      ]
+    }
+  ],
+  "lignes_dupliquees": 1,
+  "taux_completude_global": 0.9921,
+  "geographique": true,
+  "crs": "EPSG:4326 (supposé, colonnes lat/lon)",
+  "types_geometrie": [],
+  "geometries_invalides": 0,
+  "geometries_vides": 0,
+  "emprise": [
+    44.24092,
+    -23.7661,
+    49.33884,
+    48.28111
+  ],
+  "hors_madagascar": 1,
+  "colonne_temporelle": "date_installation",
+  "date_min": "1995-01-01",
+  "date_max": "2015-10-23",
+  "pas_de_temps": "irrégulier (~400 jours)",
+  "anciennete_jours": 4040,
+  "alertes": [
+    "« date_installation » : date stockée en texte, conversion nécessaire avant intégration",
+    "1 ligne(s) entièrement dupliquée(s)",
+    "1 objet(s) hors de l'emprise de Madagascar (inversion lat/lon ou système de coordonnées erroné ?)",
+    "Données anciennes : dernière valeur il y a 4040 jours"
+  ],
+  "score_qualite": 82.3
+}

@@ -1,0 +1,45 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Dépendances
+        run: |
+          pip install -r poc2-diagnostic/requirements.txt \
+                      -r poc1-interoperabilite/requirements.txt \
+                      -r poc3-series-temporelles/requirements.txt ruff
+      - name: Analyse statique (ruff)
+        run: ruff check --select E,F,W --ignore E501 .
+      - name: POC 2 — kit de diagnostic
+        run: |
+          cd poc2-diagnostic
+          python exemples/generer_exemples.py
+          python -m pytest -q tests
+          python -m sire_diag.cli profiler exemples/donnees/* -o /tmp/rapports
+          python -m sire_diag.cli matrice exemples/donnees/* -o /tmp/rapports
+      - name: POC 1 — interopérabilité
+        run: cd poc1-interoperabilite && python -m pytest -q tests
+      - name: POC 3 — séries temporelles
+        run: cd poc3-series-temporelles && python -m pytest -q tests
+      - name: Validation des fichiers docker compose
+        run: |
+          cd poc1-interoperabilite && cp .env.exemple .env && docker compose config -q && rm .env
+          cd ../poc3-series-temporelles && cp .env.exemple .env && docker compose config -q && rm .env
+      - name: Syntaxe JavaScript et shell
+        run: |
+          node --check poc1-interoperabilite/web/app.js
+          bash -n poc1-interoperabilite/demarrer.sh

@@ -1,0 +1,38 @@
+# POC 3 — Serveur OGC SensorThings API (FROST-Server) pour les séries de pluie
+# par bassin versant. Interface : http://localhost:8081/FROST-Server/v1.1
+
+name: sire-poc3
+
+services:
+  frost:
+    image: ${FROST_IMAGE:-fraunhoferiosb/frost-server:latest}
+    environment:
+      serviceRootUrl: http://localhost:8081/FROST-Server
+      http_cors_enable: "true"
+      http_cors_allowed_origins: "*"
+      persistence_db_driver: org.postgresql.Driver
+      persistence_db_url: jdbc:postgresql://database:5432/sensorthings
+      persistence_db_username: ${ST_DB_USER:-sensorthings}
+      persistence_db_password: ${ST_DB_PASSWORD:?définir ST_DB_PASSWORD dans .env}
+      persistence_autoUpdateDatabase: "true"
+    ports:
+      - "127.0.0.1:8081:8080"   # écriture ouverte : limité au poste local
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.4}
+    environment:
+      POSTGRES_DB: sensorthings
+      POSTGRES_USER: ${ST_DB_USER:-sensorthings}
+      POSTGRES_PASSWORD: ${ST_DB_PASSWORD}
+    volumes:
+      - stdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${ST_DB_USER:-sensorthings} -d sensorthings"]
+      interval: 10s
+      retries: 10
+
+volumes:
+  stdata:
