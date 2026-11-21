@@ -12,7 +12,7 @@ name: sire-poc1
 
 services:
   postgis:
-    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.4}
+    image: ${POSTGIS_IMAGE:-postgis/postgis:16-3.7}
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-sire}
       POSTGRES_USER: ${POSTGRES_USER:-sire}
@@ -26,7 +26,7 @@ services:
     # port non exposé sur l'hôte : la base n'est accessible qu'au réseau interne
 
   geoserver:
-    image: ${GEOSERVER_IMAGE:-kartoza/geoserver:2.25.2}
+    image: ${GEOSERVER_IMAGE:-kartoza/geoserver:2.28.5}
     environment:
       GEOSERVER_ADMIN_USER: ${GEOSERVER_ADMIN_USER:-admin}
       GEOSERVER_ADMIN_PASSWORD: ${GEOSERVER_ADMIN_PASSWORD:?définir GEOSERVER_ADMIN_PASSWORD dans .env}
@@ -61,7 +61,7 @@ services:
       - ./data/points_eau_fictifs.geojson:/data/points_eau_fictifs.geojson:ro
 
   web:
-    image: nginx:1.27-alpine
+    image: nginx:1.29-alpine
     volumes:
       - ./web:/usr/share/nginx/html:ro
       - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
@@ -70,7 +70,7 @@ services:
     depends_on: [geoserver, catalogue, producteur]
 
   gdal:
-    image: ${GDAL_IMAGE:-ghcr.io/osgeo/gdal:ubuntu-small-3.9.2}
+    image: ${GDAL_IMAGE:-ghcr.io/osgeo/gdal:ubuntu-small-3.13.3}
     profiles: ["outils"]
     volumes:
       - ./data:/data
